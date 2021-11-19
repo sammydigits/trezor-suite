@@ -49,13 +49,13 @@ export const useOffers = (props: Props) => {
 
     loadInvityData();
 
-    const { invityAPIUrl, isFromRedirect, sellInfo } = useSelector(state => ({
-        invityAPIUrl: state.suite.settings.debug.invityAPIUrl,
+    const { invityServerEnvironment, isFromRedirect, sellInfo } = useSelector(state => ({
+        invityServerEnvironment: state.suite.settings.debug.invityServerEnvironment,
         isFromRedirect: state.wallet.coinmarket.sell.isFromRedirect,
         sellInfo: state.wallet.coinmarket.sell.sellInfo,
     }));
-    if (invityAPIUrl) {
-        invityAPI.setInvityAPIServer(invityAPIUrl);
+    if (invityServerEnvironment) {
+        invityAPI.setInvityServersEnvironment(invityServerEnvironment);
     }
 
     const { selectedFee, composed, recomposeAndSign } = useCoinmarketRecomposeAndSign();
