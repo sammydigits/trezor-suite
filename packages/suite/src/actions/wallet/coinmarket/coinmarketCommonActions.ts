@@ -15,7 +15,7 @@ import {
 } from '@wallet-utils/cardanoUtils';
 
 import { submitRequestForm as envSubmitRequestForm, isDesktop } from '@suite-utils/env';
-import { WhoAmI } from '@suite/components/wallet/CoinmarketAuthentication';
+import type { WhoAmI } from '@wallet-components/InvityAuthentication';
 
 export type CoinmarketCommonAction =
     | {

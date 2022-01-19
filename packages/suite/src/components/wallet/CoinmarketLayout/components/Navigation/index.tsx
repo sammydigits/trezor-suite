@@ -34,27 +34,28 @@ const Navigation = () => {
 
     return (
         <WalletLayoutNavigation>
-            <>{items
-                .filter(i =>
-                    account?.networkType === 'cardano'
-                        ? isRouteVisibleInCardano(i)
-                        : true,
-                )
-                .map(({ route, title }) => (
-                    <WalletLayoutNavLink
-                        key={route}
-                        title={title}
-                        active={routeName === route}
-                        onClick={() => goto(route, { preserveParams: true })}
-                    />
-                ))}
+            <>
+                {items
+                    .filter(i =>
+                        account?.networkType === 'cardano' ? isRouteVisibleInCardano(i) : true,
+                    )
+                    .map(({ route, title }) => (
+                        <WalletLayoutNavLink
+                            key={route}
+                            title={title}
+                            active={routeName === route}
+                            onClick={() => goto(route, { preserveParams: true })}
+                        />
+                    ))}
                 {account?.symbol === 'btc' && (
                     <SavingsWalletLayoutNavLinkWrapper>
                         <WalletLayoutNavLink
                             key="wallet-coinmarket-savings"
                             title="TR_NAV_SAVINGS"
                             active={!!routeName?.startsWith('wallet-coinmarket-savings')}
-                            onClick={() => goto('wallet-coinmarket-savings', { preserveParams: true })}
+                            onClick={() =>
+                                goto('wallet-coinmarket-savings', { preserveParams: true })
+                            }
                         />
                     </SavingsWalletLayoutNavLinkWrapper>
                 )}
