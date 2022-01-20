@@ -49,6 +49,7 @@ const Row = styled.div`
     width: 100%;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 `;
 
 const TitleRow = styled(Row)`
@@ -59,7 +60,7 @@ const Delimeter = styled.div``;
 
 interface Props {
     title: React.ReactNode;
-    titleContent?: React.ReactNode;
+    titleContent?: React.ReactElement;
     maxWidth: 'small' | 'default';
     children?: React.ReactNode;
     navigation?: React.ReactNode;
@@ -93,7 +94,10 @@ const AppNavigationPanel = (props: Props) => {
                     <BasicInfo>
                         <TitleRow>
                             <Title noMargin>{props.title}</Title>
-                            <Aside>{props.titleContent}</Aside>
+                            <Aside>
+                                {React.isValidElement(props.titleContent) &&
+                                    React.cloneElement(props.titleContent, { inView })}
+                            </Aside>
                         </TitleRow>
                         {props.children && <Row>{props.children}</Row>}
                     </BasicInfo>
