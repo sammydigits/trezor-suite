@@ -44,3 +44,5 @@ Please report suspected security vulnerabilities in private to [security@satoshi
 ## IDE specific settings
 
 Find specific settings for Integrated Development Environments (IDE) in [IDE.md](./IDE.md)
+
+Adding a line too readme to test why adding a # to branch name breaks the tests.
