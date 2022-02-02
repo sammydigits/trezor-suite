@@ -27,10 +27,26 @@ const StyledReactSwitch = styled(({ isSmall, ...rest }) => <ReactSwitch {...rest
                     : 'translateX(3px) !important'};
             `}
     }
+
+    ${props =>
+        props.disabled &&
+        css`
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                cursor: not-allowed;
+                z-index: 2;
+            }
+        `}
 `;
 
 const Wrapper = styled.div`
     display: flex;
+    position: relative;
 `;
 
 interface Props extends ReactSwitchProps {
