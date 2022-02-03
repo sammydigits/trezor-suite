@@ -7,8 +7,9 @@ import { useActions, useRecovery, useSelector } from '@suite-hooks';
 import RecoveryStepBox from './RecoveryStepBox';
 
 const RecoveryStep = () => {
-    const { goToNextStep } = useActions({
+    const { goToNextStep, updateStats } = useActions({
         goToNextStep: onboardingActions.goToNextStep,
+        updateStats: onboardingActions.updateStats,
     });
 
     const { device } = useSelector(state => ({
@@ -79,8 +80,9 @@ const RecoveryStep = () => {
                 description={<Translation id="TR_RECOVERY_TYPES_DESCRIPTION" />}
             >
                 <SelectRecoveryType
-                    onSelect={(type: boolean) => {
-                        setAdvancedRecovery(type);
+                    onSelect={(type: 'standard' | 'advanced') => {
+                        setAdvancedRecovery(type === 'advanced');
+                        updateStats({ recoveryType: type });
                         recoverDevice();
                     }}
                 />

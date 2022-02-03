@@ -10,7 +10,7 @@ import { useOnboarding } from '@suite-hooks';
 
 const SecurityStep = () => {
     const [showSkipConfirmation, setShowSkipConfirmation] = useState(false);
-    const { goToNextStep } = useOnboarding();
+    const { goToNextStep, updateStats } = useOnboarding();
     return (
         <>
             {showSkipConfirmation && (
@@ -36,7 +36,10 @@ const SecurityStep = () => {
                 outerActions={
                     <OnboardingButtonSkip
                         data-test="@onboarding/skip-backup"
-                        onClick={() => setShowSkipConfirmation(true)}
+                        onClick={() => {
+                            setShowSkipConfirmation(true);
+                            updateStats({ backup: 'skip' });
+                        }}
                     >
                         <Translation id="TR_SKIP_BACKUP" />
                     </OnboardingButtonSkip>

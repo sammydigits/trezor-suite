@@ -19,6 +19,8 @@ export const useOnboarding = () => {
         enableOnboardingReducer: onboardingActions.enableOnboardingReducer,
         goto: routerActions.goto,
         rerun: recoveryActions.rerun,
+        updateStats: onboardingActions.updateStats,
+        addPath: onboardingActions.addPath,
     });
 
     return {
