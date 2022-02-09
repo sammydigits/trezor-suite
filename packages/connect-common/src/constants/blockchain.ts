@@ -1,5 +1,3 @@
-/* @flow */
-
 // blockchain events
 export const ERROR: 'blockchain-error' = 'blockchain-error';
 export const CONNECT: 'blockchain-connect' = 'blockchain-connect';

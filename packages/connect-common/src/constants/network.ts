@@ -1,5 +1,3 @@
-/* @flow */
-
 export const TYPES = Object.freeze({
     bitcoin: 'Bitcoin',
     ethereum: 'Ethereum',

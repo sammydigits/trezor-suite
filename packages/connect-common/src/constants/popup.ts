@@ -1,4 +1,3 @@
-/* @flow */
 
 // Message called from popup.html inline script before "window.onload" event. This is first message from popup to window.opener.
 export const BOOTSTRAP: 'popup-bootstrap' = 'popup-bootstrap';

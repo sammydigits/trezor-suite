@@ -1,4 +1,3 @@
-/* @flow */
 import * as BLOCKCHAIN from './blockchain';
 import * as DEVICE from './device';
 import * as ERRORS from './errors';

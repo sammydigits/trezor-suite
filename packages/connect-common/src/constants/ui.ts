@@ -1,5 +1,3 @@
-/* @flow */
-
 export const TRANSPORT: 'ui-no_transport' = 'ui-no_transport';
 export const BOOTLOADER: 'ui-device_bootloader_mode' = 'ui-device_bootloader_mode';
 export const NOT_IN_BOOTLOADER: 'ui-device_not_in_bootloader_mode' =

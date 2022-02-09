@@ -1,5 +1,3 @@
-/* @flow */
-
 export const ERROR_CODES = {
     Init_NotInitialized: 'TrezorConnect not yet initialized', // race condition: call on not initialized Core (usually hot-reloading)
     Init_AlreadyInitialized: 'TrezorConnect has been already initialized', // thrown by .init called multiple times

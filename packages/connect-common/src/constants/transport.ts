@@ -1,5 +1,3 @@
-/* @flow */
-
 export const START: 'transport-start' = 'transport-start';
 export const ERROR: 'transport-error' = 'transport-error';
 export const UPDATE: 'transport-update' = 'transport-update';

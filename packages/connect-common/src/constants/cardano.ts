@@ -1,4 +1,4 @@
-/* @flow */
+// todo: this should be removed and protobuf types should be used instead
 
 export const PROTOCOL_MAGICS = Object.freeze({
     mainnet: 764824073,

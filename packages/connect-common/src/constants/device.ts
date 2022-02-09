@@ -1,5 +1,3 @@
-/* @flow */
-
 // device list events
 export const CONNECT: 'device-connect' = 'device-connect';
 export const CONNECT_UNACQUIRED: 'device-connect_unacquired' = 'device-connect_unacquired';

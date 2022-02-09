@@ -1,5 +1,3 @@
-/* @flow */
-
 // Message called from iframe.html inline script before "window.onload" event. This is first message from iframe to window.opener.
 export const BOOTSTRAP: 'iframe-bootstrap' = 'iframe-bootstrap';
 // Message from iframe.js to window.opener, called after "window.onload" event. This is second message from iframe to window.opener.
