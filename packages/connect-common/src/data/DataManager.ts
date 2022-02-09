@@ -1,5 +1,3 @@
-/* @flow */
-
 import parseUri from 'parse-uri';
 import { httpRequest } from '../env/node/networkUtils';
 import { DEFAULT_PRIORITY } from './ConnectSettings';

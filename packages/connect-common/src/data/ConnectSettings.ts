@@ -1,5 +1,3 @@
-/* @flow */
-
 import type { Manifest, ConnectSettings } from '../types';
 
 /*

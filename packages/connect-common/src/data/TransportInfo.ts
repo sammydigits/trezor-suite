@@ -1,4 +1,3 @@
-/* @flow */
 import type { BridgeInfo } from '../types';
 
 const info: BridgeInfo = {

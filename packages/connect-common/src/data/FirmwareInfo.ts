@@ -1,5 +1,3 @@
-/* @flow */
-
 import { getInfo } from '@trezor/rollout';
 import type { FirmwareRelease, Features } from '../types';
 

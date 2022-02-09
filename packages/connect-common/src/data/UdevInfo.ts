@@ -1,5 +1,3 @@
-/* @flow */
-
 // This file is using format of ./data/bridge/releases.json
 // udev rules are changed occasionally and since there is no releases.json for udev rules its ok to make it hardcoded here
 
