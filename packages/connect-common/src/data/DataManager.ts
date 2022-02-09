@@ -1,9 +1,11 @@
 import parseUri from 'parse-uri';
-import { httpRequest } from '../env/node/networkUtils';
 import { DEFAULT_PRIORITY } from './ConnectSettings';
 import { parseCoinsJson } from './CoinInfo';
 import { parseFirmware } from './FirmwareInfo';
 import { parseBridgeJSON } from './TransportInfo';
+
+// todo: use @trezor/utils
+import { httpRequest } from '../env/node/networkUtils';
 import { versionCompare } from '../utils/versionUtils';
 
 import type { ConnectSettings } from '../types';

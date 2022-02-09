@@ -1,6 +1,8 @@
 import { ERRORS } from '../constants';
-import { toHardened, fromHardened } from '../utils/pathUtils';
 import type { CoinInfo, BitcoinNetworkInfo, EthereumNetworkInfo, MiscNetworkInfo } from '../types';
+
+// todo: use @trezor/utils
+import { toHardened, fromHardened } from '../utils/pathUtils';
 
 const bitcoinNetworks: BitcoinNetworkInfo[] = [];
 const ethereumNetworks: EthereumNetworkInfo[] = [];
