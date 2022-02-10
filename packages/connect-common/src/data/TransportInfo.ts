@@ -8,8 +8,7 @@ const info: BridgeInfo = {
 };
 
 // Parse JSON loaded from config.assets.bridge
-export const parseBridgeJSON = (json: JSON) => {
-    // $FlowIssue indexer property is missing in `JSON`
+export const parseBridgeJSON = (json: any) => {
     const latest = json[0];
     const version = latest.version.join('.');
     const data: BridgeInfo = JSON.parse(JSON.stringify(latest).replace(/{version}/g, version));
@@ -27,4 +26,4 @@ export const parseBridgeJSON = (json: JSON) => {
     return info;
 };
 
-export const getBridgeInfo = (): BridgeInfo => info;
+export const getBridgeInfo = () => info;

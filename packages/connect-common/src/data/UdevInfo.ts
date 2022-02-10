@@ -1,7 +1,7 @@
 // This file is using format of ./data/bridge/releases.json
 // udev rules are changed occasionally and since there is no releases.json for udev rules its ok to make it hardcoded here
 
-import type { UdevInfo } from '../types';
+import type { UdevInfo } from 'trezor-connect';
 
 const info: UdevInfo = {
     directory: '',
@@ -19,4 +19,4 @@ const info: UdevInfo = {
     ],
 };
 
-export const getUdevInfo = (): UdevInfo => info;
+export const getUdevInfo = () => info;

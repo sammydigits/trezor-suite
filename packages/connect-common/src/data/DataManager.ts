@@ -1,3 +1,5 @@
+// todo: parse-uri, move to @trezor/utils maybe?
+// @ts-ignore
 import parseUri from 'parse-uri';
 import { DEFAULT_PRIORITY } from './ConnectSettings';
 import { parseCoinsJson } from './CoinInfo';
@@ -5,64 +7,64 @@ import { parseFirmware } from './FirmwareInfo';
 import { parseBridgeJSON } from './TransportInfo';
 
 // todo: use @trezor/uti
-import { httpRequest } from '../env/node/networkUtils';
+import { httpRequest } from '../utils/node/networkUtils';
 
 import type { ConnectSettings } from 'trezor-connect';
 
 type WhiteList = {
-    priority: number,
-    origin: string,
+    priority: number;
+    origin: string;
 };
 type KnownHost = {
-    origin: string,
-    label?: string,
-    icon?: string,
+    origin: string;
+    label?: string;
+    icon?: string;
 };
 
 type SupportedBrowser = {
-    version: number,
-    download: string,
-    update: string,
+    version: number;
+    download: string;
+    update: string;
 };
 type WebUSB = {
-    vendorId: string,
-    productId: string,
+    vendorId: string;
+    productId: string;
 };
 
 type Resources = {
-    bridge: string,
+    bridge: string;
 };
 type Asset = {
-    name: string,
-    type?: string,
-    url: string,
+    name: string;
+    type?: string;
+    url: string;
 };
 type ProtobufMessages = {
-    name: string,
+    name: string;
     range: {
-        min: string[],
-        max?: string[],
-    },
-    json: string,
+        min: string[];
+        max?: string[];
+    };
+    json: string;
 };
 export type Config = {
-    whitelist: WhiteList[],
-    management: WhiteList[],
-    knownHosts: KnownHost[],
-    onionDomains: { [key: string]: string },
-    webusb: WebUSB[],
-    resources: Resources,
-    assets: Asset[],
-    messages: ProtobufMessages[],
-    supportedBrowsers: { [key: string]: SupportedBrowser },
-    supportedFirmware: Array<{|
-        coinType?: string,
-        coin?: string | string[],
-        methods?: string[],
-        capabilities?: string[],
-        min?: string[],
-        max?: string[],
-    |}>,
+    whitelist: WhiteList[];
+    management: WhiteList[];
+    knownHosts: KnownHost[];
+    onionDomains: { [key: string]: string };
+    webusb: WebUSB[];
+    resources: Resources;
+    assets: Asset[];
+    messages: ProtobufMessages[];
+    supportedBrowsers: { [key: string]: SupportedBrowser };
+    supportedFirmware: Array<{
+        coinType?: string;
+        coin?: string | string[];
+        methods?: string[];
+        capabilities?: string[];
+        min?: string[];
+        max?: string[];
+    }>;
 };
 
 type AssetCollection = { [key: string]: JSON };
@@ -82,7 +84,7 @@ export default class DataManager {
 
     static messages: { [key: string]: JSON } = {};
 
-    static async load(settings: ConnectSettings, withAssets: boolean = true) {
+    static async load(settings: ConnectSettings, withAssets = true) {
         const ts = settings.env === 'web' ? `?r=${settings.timestamp}` : '';
         this.settings = settings;
         const config = await httpRequest(`${settings.configSrc}${ts}`, 'json');
@@ -121,6 +123,8 @@ export default class DataManager {
         if (!withAssets) return;
 
         const assetPromises = this.config.assets.map(async asset => {
+            
+            // todo: do we still need this? can't it be bundled?
             const json = await httpRequest(`${asset.url}${ts}`, asset.type || 'json');
             this.assets[asset.name] = json;
         });
@@ -144,7 +148,7 @@ export default class DataManager {
     }
 
     static isWhitelisted(origin: string) {
-        if (!this.config) return null;
+        if (!this.config) return;
         const uri = parseUri(origin);
         if (uri && typeof uri.host === 'string') {
             const parts = uri.host.split('.');
@@ -173,7 +177,7 @@ export default class DataManager {
         }
     }
 
-    static getPriority(whitelist: ?WhiteList) {
+    static getPriority(whitelist?: WhiteList) {
         if (whitelist) {
             return whitelist.priority;
         }
@@ -184,7 +188,7 @@ export default class DataManager {
         return this.config.knownHosts.find(host => host.origin === origin);
     }
 
-    static getSettings(key: ?string): any {
+    static getSettings(key?: keyof ConnectSettings) {
         if (!this.settings) return null;
         if (typeof key === 'string') {
             return this.settings[key];

@@ -4,7 +4,7 @@ if (global && typeof global.fetch !== 'function') {
     global.fetch = fetch;
 }
 
-export const httpRequest = (url: string, _type: string): any => {
+export const httpRequest = (url: string, _type: string) => {
     const fileUrl = url.split('?')[0];
 
     switch (fileUrl) {

@@ -34,6 +34,10 @@ export const getFirmwareStatus = (features: Features) => {
     if (features.major_version === 1 && features.bootloader_mode) {
         return 'unknown';
     }
+
+    // todo: there is releases type in @trezor/rollout which is not compatible with releases here
+    // @trezor/rollout should be removed/merged into connect-* packages, so I am skipping type-check for now
+    // @ts-ignore
     const info = getInfo({ features, releases: releases[features.major_version] });
 
     // should not happen, possibly if releases list contains inconsistent data or so
@@ -47,6 +51,9 @@ export const getFirmwareStatus = (features: Features) => {
 };
 
 export const getRelease = (features: Features) =>
+    // for t1 in bootloader, what device reports as firmware version is in fact bootloader version, so we can
+    // not safely tell firmware version
+    // @ts-ignore
     getInfo({ features, releases: releases[features.major_version] });
 
 export const getReleases = (model: number) => releases[model];

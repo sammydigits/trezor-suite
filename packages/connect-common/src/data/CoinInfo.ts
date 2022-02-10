@@ -1,5 +1,10 @@
 import { ERRORS } from '../constants';
-import type { CoinInfo, BitcoinNetworkInfo, EthereumNetworkInfo, MiscNetworkInfo } from 'trezor-connect';
+import type {
+    CoinInfo,
+    BitcoinNetworkInfo,
+    EthereumNetworkInfo,
+    MiscNetworkInfo,
+} from 'trezor-connect';
 
 // todo: use @trezor/utils
 import { toHardened, fromHardened } from '../utils/pathUtils';
@@ -61,9 +66,7 @@ export const getMiscNetwork = (pathOrName: number[] | string) => {
  * Bitcoin networks
  */
 
-export const getSegwitNetwork = (
-    coin: BitcoinNetworkInfo,
-): ?$ElementType<BitcoinNetworkInfo, 'network'> => {
+export const getSegwitNetwork = (coin: BitcoinNetworkInfo) => {
     if (coin.segwit && typeof coin.xPubMagicSegwit === 'number') {
         return {
             ...coin.network,
@@ -76,9 +79,7 @@ export const getSegwitNetwork = (
     return null;
 };
 
-export const getBech32Network = (
-    coin: BitcoinNetworkInfo,
-): ?$ElementType<BitcoinNetworkInfo, 'network'> => {
+export const getBech32Network = (coin: BitcoinNetworkInfo) => {
     if (coin.segwit && typeof coin.xPubMagicSegwitNative === 'number') {
         return {
             ...coin.network,
@@ -110,22 +111,29 @@ export const fixCoinInfoNetwork = (ci: BitcoinNetworkInfo, path: number[]) => {
     return coinInfo;
 };
 
-const detectBtcVersion = data => {
+// todo: not really used at the moment
+const detectBtcVersion = (data: any) => {
+    // @ts-ignore
     if (data.subversion == null) {
         return 'btc';
     }
+    // @ts-ignore
     if (data.subversion.startsWith('/Bitcoin ABC')) {
         return 'bch';
     }
+    // @ts-ignore
     if (data.subversion.startsWith('/Bitcoin Cash')) {
         return 'bch';
     }
+    // @ts-ignore
     if (data.subversion.startsWith('/Bitcoin Gold')) {
         return 'btg';
     }
     return 'btc';
 };
 
+// todo: not used anywhere at the moment.
+// skipping ts for now
 export const getCoinInfoByHash = (hash: string, networkInfo: any) => {
     const networks = cloneCoinInfo(bitcoinNetworks);
     const result = networks.find(
@@ -140,12 +148,15 @@ export const getCoinInfoByHash = (hash: string, networkInfo: any) => {
 
     if (result.isBitcoin) {
         const btcVersion = detectBtcVersion(networkInfo);
-        let fork: ?BitcoinNetworkInfo;
+        let fork: BitcoinNetworkInfo;
         if (btcVersion === 'bch') {
+            // @ts-ignore
             fork = networks.find(info => info.name === 'Bcash');
         } else if (btcVersion === 'btg') {
+            // @ts-ignore
             fork = networks.find(info => info.name === 'Bgold');
         }
+        // @ts-ignore
         if (fork) {
             return fork;
         }
@@ -157,7 +168,7 @@ export const getCoinInfoByHash = (hash: string, networkInfo: any) => {
     return result;
 };
 
-export const getCoinInfo = (currency: string): ?CoinInfo =>
+export const getCoinInfo = (currency: string) =>
     getBitcoinNetwork(currency) || getEthereumNetwork(currency) || getMiscNetwork(currency);
 
 export const getCoinName = (path: number[]) => {
@@ -300,6 +311,8 @@ const parseMiscNetworksJSON = (json: any, type?: 'misc' | 'nem') => {
             blockchainLink: network.blockchain_link,
             blocktime: -1,
             curve: network.curve,
+            // todo: connect types should be updated maybe?
+            // @ts-ignore
             defaultFees,
             minFee,
             maxFee,
@@ -330,11 +343,16 @@ export const parseCoinsJson = (json: any) => {
     });
 };
 
-export const getUniqueNetworks = (networks: Array<?CoinInfo>): CoinInfo[] =>
-    networks.reduce((result: CoinInfo[], info: ?CoinInfo) => {
+export const getUniqueNetworks = (networks: CoinInfo[]) =>
+    networks.reduce((result: CoinInfo[], info?: CoinInfo) => {
         if (!info || result.find(i => i.shortcut === info.shortcut)) return result;
         return result.concat(info);
     }, []);
 
-export const getAllNetworks = (): CoinInfo[] =>
-    [].concat(bitcoinNetworks).concat(ethereumNetworks).concat(miscNetworks);
+export const getAllNetworks = () => {
+    return [
+        ...bitcoinNetworks,
+        ...ethereumNetworks,
+        ...miscNetworks,
+    ]
+}

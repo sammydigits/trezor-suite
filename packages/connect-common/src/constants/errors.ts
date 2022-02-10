@@ -56,7 +56,7 @@ export class TrezorError extends Error {
     }
 }
 
-export const TypedError = (id: $Keys<typeof ERROR_CODES>, message?: string) =>
+export const TypedError = (id: keyof typeof ERROR_CODES, message?: string) =>
     new TrezorError(id, message || ERROR_CODES[id]);
 
 // a slight hack
