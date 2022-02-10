@@ -1,5 +1,5 @@
 import { ERRORS } from '../constants';
-import type { CoinInfo, BitcoinNetworkInfo, EthereumNetworkInfo, MiscNetworkInfo } from '../types';
+import type { CoinInfo, BitcoinNetworkInfo, EthereumNetworkInfo, MiscNetworkInfo } from 'trezor-connect';
 
 // todo: use @trezor/utils
 import { toHardened, fromHardened } from '../utils/pathUtils';

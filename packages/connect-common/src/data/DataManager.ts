@@ -4,11 +4,11 @@ import { parseCoinsJson } from './CoinInfo';
 import { parseFirmware } from './FirmwareInfo';
 import { parseBridgeJSON } from './TransportInfo';
 
-// todo: use @trezor/utils
+// todo: use @trezor/uti
 import { httpRequest } from '../env/node/networkUtils';
 import { versionCompare } from '../utils/versionUtils';
 
-import type { ConnectSettings } from '../types';
+import type { ConnectSettings } from 'trezor-connect';
 
 type WhiteList = {
     priority: number,

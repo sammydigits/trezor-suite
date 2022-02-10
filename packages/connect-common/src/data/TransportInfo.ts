@@ -1,4 +1,4 @@
-import type { BridgeInfo } from '../types';
+import type { BridgeInfo } from 'trezor-connect';
 
 const info: BridgeInfo = {
     version: [],

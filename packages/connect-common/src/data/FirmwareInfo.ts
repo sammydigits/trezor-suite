@@ -1,5 +1,5 @@
 import { getInfo } from '@trezor/rollout';
-import type { FirmwareRelease, Features } from '../types';
+import type { FirmwareRelease, Features } from 'trezor-connect';
 
 const releases: { [key: number]: FirmwareRelease[] } = {};
 releases[1] = [];

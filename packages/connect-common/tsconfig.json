@@ -1,8 +1,9 @@
 {
     "extends": "./tsconfig.lib.json",
     "compilerOptions": {
-        "noEmit": true
+        "noEmit": true,
+        "types": ["trezor-connect"]
     },
     "include": ["./src/**/*.ts", "./tests/**/*.ts"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
 }

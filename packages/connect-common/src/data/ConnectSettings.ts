@@ -1,4 +1,4 @@
-import type { Manifest, ConnectSettings } from '../types';
+import type { Manifest, ConnectSettings } from 'trezor-connect';
 
 /*
  * Initial settings for connect.
