@@ -6,7 +6,6 @@ import { parseBridgeJSON } from './TransportInfo';
 
 // todo: use @trezor/uti
 import { httpRequest } from '../env/node/networkUtils';
-import { versionCompare } from '../utils/versionUtils';
 
 import type { ConnectSettings } from 'trezor-connect';
 
@@ -142,18 +141,6 @@ export default class DataManager {
         // parse firmware definitions
         parseFirmware(this.assets['firmware-t1'], 1);
         parseFirmware(this.assets['firmware-t2'], 2);
-    }
-
-    static getProtobufMessages(version?: number[]) {
-        // empty array = unacquired device
-        if (!version || !version.length) return this.messages.default;
-        const model = version[0] - 1;
-        const messages = this.config.messages.find(m => {
-            const min = m.range.min[model];
-            const max = m.range.max ? m.range.max[model] : version;
-            return versionCompare(version, min) >= 0 && versionCompare(version, max) <= 0;
-        });
-        return this.messages[messages ? messages.name : 'default'];
     }
 
     static isWhitelisted(origin: string) {
