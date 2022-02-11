@@ -7,7 +7,7 @@ import { parseFirmware } from './FirmwareInfo';
 import { parseBridgeJSON } from './TransportInfo';
 
 // todo: use @trezor/uti
-import { httpRequest } from '../utils/node/networkUtils';
+import { httpRequest } from '../utils/browser/networkUtils';
 
 import type { ConnectSettings } from 'trezor-connect';
 

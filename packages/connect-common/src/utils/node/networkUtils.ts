@@ -1,16 +1,30 @@
+/* eslint-disable global-require */
+
 import fetch from 'cross-fetch';
 
-export const httpRequest = async (url: string, type = 'text') => {
-    const response = await fetch(url, { credentials: 'same-origin' });
-    if (response.ok) {
-        if (type === 'json') {
-            const txt = await response.text();
-            return JSON.parse(txt);
-        }
-        if (type === 'binary') {
-            return response.arrayBuffer();
-        }
-        return response.text();
+if (global && typeof global.fetch !== 'function') {
+    global.fetch = fetch;
+}
+
+export const httpRequest = (url: string, _type: string) => {
+    const fileUrl = url.split('?')[0];
+
+    switch (fileUrl) {
+        case './data/config.json':
+            // todo:
+            return require('../../../data/config.json');
+        case './data/coins.json':
+            // todo:
+            return require('../../../data/coins.json');
+        case './data/bridge/releases.json':
+            return require('@trezor/connect-common/files/bridge/releases.json');
+        case './data/firmware/1/releases.json':
+            return require('@trezor/connect-common/files/firmware/1/releases.json');
+        case './data/firmware/2/releases.json':
+            return require('@trezor/connect-common/files/firmware/2/releases.json');
+        case './data/messages/messages.json':
+            return require('../../../data/messages/messages.json');
+        default:
+            return null;
     }
-    throw new Error(`httpRequest error: ${url} ${response.statusText}`);
 };
