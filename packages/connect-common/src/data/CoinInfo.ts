@@ -349,10 +349,4 @@ export const getUniqueNetworks = (networks: CoinInfo[]) =>
         return result.concat(info);
     }, []);
 
-export const getAllNetworks = () => {
-    return [
-        ...bitcoinNetworks,
-        ...ethereumNetworks,
-        ...miscNetworks,
-    ]
-}
+export const getAllNetworks = () => [...bitcoinNetworks, ...ethereumNetworks, ...miscNetworks];

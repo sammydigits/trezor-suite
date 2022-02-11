@@ -117,7 +117,7 @@ export const parse = (input: ConnectSettings) => {
     // For debugging purposes `connectSrc` could be defined in `global.__TREZOR_CONNECT_SRC` variable
     // @ts-ignore
     if (typeof global !== 'undefined' && typeof global.__TREZOR_CONNECT_SRC === 'string') {
-    // @ts-ignore
+        // @ts-ignore
         settings.connectSrc = corsValidator(global.__TREZOR_CONNECT_SRC);
         settings.debug = true;
     }

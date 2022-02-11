@@ -123,7 +123,6 @@ export default class DataManager {
         if (!withAssets) return;
 
         const assetPromises = this.config.assets.map(async asset => {
-            
             // todo: do we still need this? can't it be bundled?
             const json = await httpRequest(`${asset.url}${ts}`, asset.type || 'json');
             this.assets[asset.name] = json;

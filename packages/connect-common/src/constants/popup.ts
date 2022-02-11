@@ -1,4 +1,3 @@
-
 // Message called from popup.html inline script before "window.onload" event. This is first message from popup to window.opener.
 export const BOOTSTRAP: 'popup-bootstrap' = 'popup-bootstrap';
 // Message from popup.js to window.opener, called after "window.onload" event. This is second message from popup to window.opener.

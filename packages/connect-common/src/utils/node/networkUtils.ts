@@ -1,7 +1,6 @@
-
 import fetch from 'cross-fetch';
 
-export const httpRequest = async (url: string, type: string = 'text') => {
+export const httpRequest = async (url: string, type = 'text') => {
     const response = await fetch(url, { credentials: 'same-origin' });
     if (response.ok) {
         if (type === 'json') {
