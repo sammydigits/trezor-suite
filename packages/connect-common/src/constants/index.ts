@@ -8,11 +8,11 @@ import * as TRANSPORT from './transport';
 import * as UI from './ui';
 import * as CARDANO from './cardano';
 
-export const CORE_EVENT: 'CORE_EVENT' = 'CORE_EVENT';
-export const UI_EVENT: 'UI_EVENT' = 'UI_EVENT';
-export const DEVICE_EVENT: 'DEVICE_EVENT' = 'DEVICE_EVENT';
-export const TRANSPORT_EVENT: 'TRANSPORT_EVENT' = 'TRANSPORT_EVENT';
-export const RESPONSE_EVENT: 'RESPONSE_EVENT' = 'RESPONSE_EVENT';
-export const BLOCKCHAIN_EVENT: 'BLOCKCHAIN_EVENT' = 'BLOCKCHAIN_EVENT';
+export const CORE_EVENT = 'CORE_EVENT';
+export const UI_EVENT = 'UI_EVENT';
+export const DEVICE_EVENT = 'DEVICE_EVENT';
+export const TRANSPORT_EVENT = 'TRANSPORT_EVENT';
+export const RESPONSE_EVENT = 'RESPONSE_EVENT';
+export const BLOCKCHAIN_EVENT = 'BLOCKCHAIN_EVENT';
 
 export { BLOCKCHAIN, DEVICE, ERRORS, IFRAME, NETWORK, POPUP, TRANSPORT, UI, CARDANO };

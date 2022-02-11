@@ -1,3 +1,5 @@
+// todo: is it used? especially 'Tezors' ?
+
 export const TYPES = Object.freeze({
     bitcoin: 'Bitcoin',
     ethereum: 'Ethereum',
