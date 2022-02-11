@@ -1,4 +1,6 @@
-import { corsValidator, parse } from '../ConnectSettings';
+/* eslint-disable no-underscore-dangle */
+
+import { corsValidator, parse } from '../data/ConnectSettings';
 
 describe('data/ConnectSettings', () => {
     const { location } = window;

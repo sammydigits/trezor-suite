@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import type { Manifest, ConnectSettings } from 'trezor-connect';
 
 /*
