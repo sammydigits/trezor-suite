@@ -1,15 +1,16 @@
 {
-    "compileOnSave": false,
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
-        "lib": ["dom", "es2015"],
+        "target": "es6",
         "outDir": "./lib",
         "strict": true,
         "declaration": true,
         "removeComments": true,
-        "types": ["jest", "node"]
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noErrorTruncation": true,
+        "types": ["node"]
     },
     "include": ["./src/index.ts"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "**/tests/**", "**/fixtures/**", "**/*.test.ts"]
 }

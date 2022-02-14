@@ -1,6 +1,6 @@
 // todo: parse-uri, move to @trezor/utils maybe?
 // @ts-ignore
-import parseUri from 'parse-uri';
+import * as parseUri from 'parse-uri';
 import { DEFAULT_PRIORITY } from './ConnectSettings';
 import { parseCoinsJson } from './CoinInfo';
 import { parseFirmware } from './FirmwareInfo';
@@ -69,13 +69,12 @@ export type Config = {
 
 type AssetCollection = { [key: string]: JSON };
 
-// TODO: transform json to flow typed object
 const parseConfig = (json: any): Config => {
     const config: Config = json;
     return config;
 };
 
-export default class DataManager {
+export class DataManager {
     static config: Config;
 
     static assets: AssetCollection = {};

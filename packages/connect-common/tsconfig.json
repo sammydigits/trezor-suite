@@ -1,8 +1,10 @@
 {
     "extends": "./tsconfig.lib.json",
+    "compileOnSave": false,
     "compilerOptions": {
         "noEmit": true,
-        "types": ["trezor-connect"]
+        "types": ["trezor-connect", "node", "jest"],
+        "resolveJsonModule": true,
     },
     "include": ["./src/**/*.ts", "./tests/**/*.ts"],
     "exclude": ["node_modules"],
