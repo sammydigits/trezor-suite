@@ -2,8 +2,8 @@
 
 set -euxo pipefail
 
-SRC='./submodules/trezor-common/tools'
-DIST='./src/data'
+SRC='../../submodules/trezor-common/tools'
+DIST='./files/data'
 
 if [ $# -ge 1 ] && [ "$1" == "local" ]
     then

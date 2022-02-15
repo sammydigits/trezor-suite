@@ -29,7 +29,9 @@
         "lint": "eslint '**/*{.ts,.tsx}'",
         "test:unit": "jest --verbose -c jest.config.js",
         "type-check": "tsc --project tsconfig.json",
-        "build:lib": "rimraf lib && tsc --p ./tsconfig.lib.json"
+        "build:lib": "rimraf lib && tsc --p ./tsconfig.lib.json",
+        "build:coins": "./scripts/coins-build.sh",
+        "build:proto": "./scripts/protobuf-build.sh"
     },
     "dependencies": {
         "@trezor/rollout": "^1.2.1",
