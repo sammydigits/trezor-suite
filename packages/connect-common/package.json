@@ -17,6 +17,12 @@
     "license": "SEE LICENSE IN LICENSE.md",
     "description": "Collection of assets and utils used by trezor-connect library.",
     "main": "./lib/index.js",
+    "browser": {
+        "./lib/utils/node/networkUtils": "./lib/utils/browser/networkUtils"
+    },
+    "react-native": {
+        "./lib/utils/node/networkUtils": "./lib/utils/react-native/networkUtils"
+    },
     "files": [
         "lib/",
         "files/**/*.json",

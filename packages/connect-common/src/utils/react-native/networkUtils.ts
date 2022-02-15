@@ -1,12 +1,9 @@
+// legacy stuff, probably will be reworked soon
+// @ts-nocheck
+
 /* eslint-disable global-require */
 
-import fetch from 'cross-fetch';
-
-if (global && typeof global.fetch !== 'function') {
-    global.fetch = fetch;
-}
-
-export const httpRequest = (url: string, _type: string) => {
+exports.httpRequest = function httpRequest(url, _type) {
     const fileUrl = url.split('?')[0];
 
     switch (fileUrl) {

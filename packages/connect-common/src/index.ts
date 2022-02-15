@@ -6,3 +6,6 @@ export * from './data/DataManager';
 export * from './data/FirmwareInfo';
 export * from './data/TransportInfo';
 export * from './data/UdevInfo';
+
+export * from './utils/node/networkUtils';
+export * from './constants';
