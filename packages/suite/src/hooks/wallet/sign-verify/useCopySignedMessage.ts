@@ -1,12 +1,9 @@
 import { useActions } from '@suite-hooks';
 import { copyToClipboard } from '@suite-utils/dom';
 import { addToast } from '@suite-actions/notificationActions';
+import { SignVerifyFields } from './useSignVerifyForm';
 
-type SignedMessageData = {
-    message: string;
-    address: string;
-    signature: string;
-};
+type SignedMessageData = Pick<SignVerifyFields, 'message' | 'address' | 'signature'>;
 
 const format = (
     { message, address, signature }: SignedMessageData,
@@ -23,13 +20,17 @@ export const useCopySignedMessage = (
     network?: string,
 ) => {
     const { addNotification } = useActions({ addNotification: addToast });
+
     const canCopy = address && signature;
+
     const copy = () => {
         const formatted = format(
             { message, address, signature },
             (network || '').split('(')[0].toUpperCase(),
         );
+
         const result = copyToClipboard(formatted, null);
+
         if (typeof result !== 'string') {
             addNotification({ type: 'copy-to-clipboard' });
         }
