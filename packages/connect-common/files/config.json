@@ -57,7 +57,7 @@
             "range": {
                 "min": ["1.0.0", "2.0.0"]
             },
-            "json": "./data/messages/messages.json"
+            "json": "./data/messages.json"
         }
     ],
     "supportedBrowsers": {

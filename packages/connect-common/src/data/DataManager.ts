@@ -73,6 +73,7 @@ const parseConfig = (json: any): Config => {
     const config: Config = json;
     return config;
 };
+console.log('Datamanager. ======');
 
 export class DataManager {
     static config: Config;
@@ -84,6 +85,8 @@ export class DataManager {
     static messages: { [key: string]: JSON } = {};
 
     static async load(settings: ConnectSettings, withAssets = true) {
+        console.log('Datamanager. load', settings);
+
         const ts = settings.env === 'web' ? `?r=${settings.timestamp}` : '';
         this.settings = settings;
         const config = await httpRequest(`${settings.configSrc}${ts}`, 'json');
@@ -145,6 +148,12 @@ export class DataManager {
         parseFirmware(this.assets['firmware-t2'], 2);
     }
 
+    // todo: remove ?
+    static getProtobufMessages() {
+        // empty array = unacquired device
+        return this.messages.default;
+    }
+
     static isWhitelisted(origin: string) {
         if (!this.config) return;
         const uri = parseUri(origin);
@@ -202,3 +211,5 @@ export class DataManager {
         return this.config;
     }
 }
+
+export default DataManager;

@@ -100,6 +100,7 @@ export const corsValidator = (url?: string) => {
 };
 
 export const parse = (input: ConnectSettings) => {
+    console.log('ConnectSettings.parse input', input);
     const settings = { ...currentSettings };
     if ('debug' in input) {
         // todo: ???
@@ -193,5 +194,8 @@ export const parse = (input: ConnectSettings) => {
     }
 
     currentSettings = settings;
+
+    console.log('ConnectSettings.parse end', currentSettings);
+
     return currentSettings;
 };

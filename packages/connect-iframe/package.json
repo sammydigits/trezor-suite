@@ -18,7 +18,7 @@
     "dependencies": {},
     "devDependencies": {
         "@trezor/blockchain-link": "2.0.0",
-        "@trezor/connect-common": "^0.0.4",
+        "@trezor/connect-common": "./packages/connect-common",
         "@trezor/rollout": "^1.2.1",
         "@trezor/transport": "1.0.1",
         "@trezor/utxo-lib": "1.0.0-beta.10",

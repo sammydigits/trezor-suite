@@ -61,6 +61,8 @@ export const init = () => async (dispatch: Dispatch, getState: GetState) => {
 
     try {
         const connectSrc = resolveStaticPath('connect/');
+
+        // const connectSrc = 'https://localhost:8088/';
         // 'https://localhost:8088/';
         // 'https://connect.corp.sldev.cz/develop/';
 

@@ -18,7 +18,7 @@ exports.httpRequest = function httpRequest(url, _type) {
         case './data/firmware/2/releases.json':
             return require('../../../files/firmware/2/releases.json');
         case './data/messages/messages.json':
-            return require('../../../data/messages/messages.json');
+            return require('../../../data/messages.json');
         default:
             return null;
     }

@@ -6,14 +6,15 @@ const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
 const SRC = '../../node_modules/trezor-connect';
-const CONNECT_DATA_SRC = `${SRC}/data`;
+const CONNECT_COMMON_SRC = '../../packages/connect-common/lib';
+// const CONNECT_DATA_SRC = `${SRC}/data`;
 const COMMON_DATA_SRC = '../../packages/connect-common/files';
 const HTML_SRC = path.resolve(__dirname, '../src/static/iframe.html');
 const DIST = path.resolve(__dirname, '../build');
 
 module.exports = {
     target: 'web',
-    mode: 'production',
+    mode: 'development',
     entry: {
         iframe: `${SRC}/lib/iframe/iframe.js`,
     },
@@ -97,9 +98,10 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 // copy messages, coins, config from 'trezor-connect'
-                { from: CONNECT_DATA_SRC, to: `${DIST}/data` },
+                // { from: CONNECT_DATA_SRC, to: `${DIST}/data` },
                 // copy firmware releases, bridge releases from '@trezor/connect-common'
                 { from: COMMON_DATA_SRC, to: `${DIST}/data` },
+                // { from: CONNECT_COMMON_SRC, to: `${DIST}/data` },
             ],
         }),
         new HtmlWebpackPlugin({

@@ -21,7 +21,7 @@ export const httpRequest = (url: string, _type: string) => {
         case './data/firmware/2/releases.json':
             return require('../../../files/firmware/2/releases.json');
         case './data/messages/messages.json':
-            return require('../../../data/messages/messages.json');
+            return require('../../../data/messages.json');
         default:
             return null;
     }
