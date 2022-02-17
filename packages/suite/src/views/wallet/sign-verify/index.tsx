@@ -10,7 +10,7 @@ import {
     SelectBar,
     Tooltip,
 } from '@trezor/components';
-import { WalletLayout, WalletLayoutHeader } from '@wallet-components';
+import { InputError, WalletLayout, WalletLayoutHeader } from '@wallet-components';
 import { CharacterCount, Translation } from '@suite-components';
 import { useActions, useDevice, useSelector, useTranslation } from '@suite-hooks';
 import * as signVerifyActions from '@wallet-actions/signVerifyActions';
@@ -26,6 +26,8 @@ import {
     MAX_LENGTH_SIGNATURE,
 } from '@wallet-hooks/sign-verify/useSignVerifyForm';
 import { getInputState } from '@suite/utils/wallet/sendFormUtils';
+import { Account } from '@suite/types/wallet';
+import { ExtendedMessageDescriptor } from '@suite/types/suite';
 
 const SwitchWrapper = styled.label`
     display: flex;
@@ -112,7 +114,7 @@ const SignVerify: React.FC = () => {
         addressField,
         pathField,
         isElectrumField,
-    } = useSignVerifyForm(page, selectedAccount.account);
+    } = useSignVerifyForm(isSignPage, selectedAccount.account as Account);
 
     const { isLocked } = useDevice();
     const { translationString } = useTranslation();
@@ -199,7 +201,7 @@ const SignVerify: React.FC = () => {
                             }
                             innerRef={messageRef}
                             state={getInputState(formErrors.message)}
-                            bottomText={formErrors.message?.message}
+                            bottomText={<InputError error={formErrors.message} />}
                             rows={4}
                             maxRows={4}
                             data-test="@sign-verify/message"
@@ -218,7 +220,8 @@ const SignVerify: React.FC = () => {
                                 label={<Translation id="TR_ADDRESS" />}
                                 account={selectedAccount.account}
                                 revealedAddresses={revealedAddresses}
-                                error={formErrors.path?.message}
+                                state={getInputState(formErrors.address)}
+                                bottomText={<InputError error={formErrors.path} />}
                                 data-test="@sign-verify/path"
                                 {...pathField}
                             />
@@ -228,7 +231,7 @@ const SignVerify: React.FC = () => {
                                 label={<Translation id="TR_ADDRESS" />}
                                 type="text"
                                 state={getInputState(formErrors.address)}
-                                bottomText={formErrors.address?.message}
+                                bottomText={<InputError error={formErrors.address} />}
                                 data-test="@sign-verify/select-address"
                                 {...addressField}
                             />
@@ -274,7 +277,7 @@ const SignVerify: React.FC = () => {
                                     readOnly={isSignPage}
                                     isDisabled={!formValues.signature?.length}
                                     state={getInputState(formErrors.signature)}
-                                    bottomText={formErrors.signature?.message}
+                                    bottomText={<InputError error={formErrors.signature} />}
                                     placeholder={translationString(
                                         'TR_SIGNATURE_AFTER_SIGNING_PLACEHOLDER',
                                     )}
@@ -288,7 +291,7 @@ const SignVerify: React.FC = () => {
                                 maxLength={MAX_LENGTH_SIGNATURE}
                                 innerRef={signatureRef}
                                 state={getInputState(formErrors.signature)}
-                                bottomText={formErrors.signature}
+                                bottomText={<InputError error={formErrors.signature} />}
                                 rows={4}
                                 maxRows={4}
                                 data-test="@sign-verify/signature"

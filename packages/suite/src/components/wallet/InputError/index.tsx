@@ -5,10 +5,15 @@ import { TypedFieldError } from '@wallet-types/form';
 
 const InputError = ({ error }: { error?: TypedFieldError }) => {
     if (!error) return null;
+
+    console.log(error);
+
     const { type, message } = error;
+
     if (typeof message === 'string') {
         return <Translation id={message as ExtendedMessageDescriptor['id']} />;
     }
+
     if (isValidElement(message)) {
         return message;
     }

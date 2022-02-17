@@ -1,10 +1,15 @@
 import { useEffect } from 'react';
-import { useForm, useController } from 'react-hook-form';
+import { useForm, useController, DeepMap, FieldError } from 'react-hook-form';
 import { useTranslation } from '@suite-hooks';
 import { isHex } from '@wallet-utils/ethUtils';
 import { isAscii } from '@trezor/utils';
 import { isAddressValid } from '@wallet-utils/validation';
-import type { Account } from '@wallet-types';
+import type { Account, Network } from '@wallet-types';
+import { Shape } from '@suite/types/utils';
+import { yupResolver } from '@hookform/resolvers/yup';
+import yup from '../../../config/suite/yup';
+import { TransFunction } from '@suite/hooks/suite/useTranslation';
+import { TypedFieldError } from '@suite/types/wallet/form';
 
 export const MAX_LENGTH_MESSAGE = 1024;
 export const MAX_LENGTH_SIGNATURE = 255;
@@ -18,6 +23,11 @@ export type SignVerifyFields = {
     hex: boolean;
 };
 
+type SignVerifyContext = {
+    isSignPage: boolean;
+    accountNetwork: Network['symbol'];
+};
+
 const DEFAULT_VALUES: SignVerifyFields = {
     message: '',
     address: '',
@@ -27,7 +37,40 @@ const DEFAULT_VALUES: SignVerifyFields = {
     hex: false,
 };
 
-export const useSignVerifyForm = (page: 'sign' | 'verify', account?: Account) => {
+// const translateErrors = (t: TransFunction, errors: DeepMap<SignVerifyFields, TypedFieldError>) => {
+//     console.log('first')
+// };
+
+const signVerifySchema = yup.object().shape<Shape<Omit<SignVerifyFields, 'isElectrum'>>>({
+    message: yup
+        .string()
+        .max(MAX_LENGTH_MESSAGE)
+        .when('hex', {
+            is: true,
+            then: schema => schema.isHex(),
+            otherwise: schema => schema.isAscii(),
+        })
+        .required(),
+    address: yup
+        .string()
+        .test(
+            'isAddressValid',
+            'TR_ADD_TOKEN_ADDRESS_NOT_VALID',
+            (value, context) =>
+                value &&
+                context.options.context?.accountNetwork &&
+                isAddressValid(value, context.options.context?.accountNetwork),
+        )
+        .required(),
+    path: yup.string().required(),
+    signature: yup.string().when('$isSignPage', {
+        is: false,
+        then: schema => schema.required(),
+    }),
+    hex: yup.boolean(),
+});
+
+export const useSignVerifyForm = (isSignPage: boolean, account: Account) => {
     const { translationString } = useTranslation();
 
     const {
@@ -40,9 +83,14 @@ export const useSignVerifyForm = (page: 'sign' | 'verify', account?: Account) =>
         control,
         trigger,
         watch,
-    } = useForm<SignVerifyFields>({
+    } = useForm<SignVerifyFields, SignVerifyContext>({
         mode: 'onBlur',
         reValidateMode: 'onChange',
+        resolver: yupResolver(signVerifySchema),
+        context: {
+            isSignPage,
+            accountNetwork: account?.symbol,
+        },
         defaultValues: DEFAULT_VALUES,
     });
 
@@ -53,21 +101,21 @@ export const useSignVerifyForm = (page: 'sign' | 'verify', account?: Account) =>
     const { field: addressField } = useController({
         control,
         name: 'address',
-        rules: {
-            required: translationString('TR_SELL_VALIDATION_ERROR_EMPTY'),
-            validate: (address: string) =>
-                account?.symbol && !isAddressValid(address, account.symbol)
-                    ? translationString('TR_ADD_TOKEN_ADDRESS_NOT_VALID')
-                    : undefined,
-        },
+        // rules: {
+        //     required: translationString('TR_SELL_VALIDATION_ERROR_EMPTY'),
+        //     validate: (address: string) =>
+        //         account?.symbol && !isAddressValid(address, account.symbol)
+        //             ? translationString('TR_ADD_TOKEN_ADDRESS_NOT_VALID')
+        //             : undefined,
+        // },
     });
 
     const { field: pathField } = useController({
         control,
         name: 'path',
-        rules: {
-            required: page === 'sign' && translationString('TR_SELL_VALIDATION_ERROR_EMPTY'),
-        },
+        // rules: {
+        //     required: isSignPage && translationString('TR_SELL_VALIDATION_ERROR_EMPTY'),
+        // },
     });
 
     const { field: hexField } = useController({
@@ -76,27 +124,27 @@ export const useSignVerifyForm = (page: 'sign' | 'verify', account?: Account) =>
     });
 
     const messageRef = register({
-        maxLength: {
-            value: MAX_LENGTH_MESSAGE,
-            message: translationString('TR_TOO_LONG'),
-        },
-        validate: {
-            hex: (message: string) =>
-                formValues.hex && !isHex(message)
-                    ? translationString('DATA_NOT_VALID_HEX')
-                    : undefined,
-            ascii: (message: string) =>
-                !formValues.hex && !isAscii(message)
-                    ? translationString('TR_ASCII_ONLY')
-                    : undefined,
-        },
+        // maxLength: {
+        //     value: MAX_LENGTH_MESSAGE,
+        //     message: translationString('TR_TOO_LONG'),
+        // },
+        // validate: {
+        //     hex: (message: string) =>
+        //         formValues.hex && !isHex(message)
+        //             ? translationString('DATA_NOT_VALID_HEX')
+        //             : undefined,
+        //     ascii: (message: string) =>
+        //         !formValues.hex && !isAscii(message)
+        //             ? translationString('TR_ASCII_ONLY')
+        //             : undefined,
+        // },
     });
 
     const signatureRef = register({
-        required: {
-            value: page === 'verify',
-            message: translationString('TR_SELL_VALIDATION_ERROR_EMPTY'),
-        },
+        // required: {
+        //     value: !isSignPage,
+        //     message: translationString('TR_SELL_VALIDATION_ERROR_EMPTY'),
+        // },
     });
 
     const { field: isElectrumField } = useController({
@@ -109,12 +157,12 @@ export const useSignVerifyForm = (page: 'sign' | 'verify', account?: Account) =>
     }, [trigger, formValues.message, formValues.hex, control?.fieldsRef]);
 
     useEffect(() => {
-        if (page === 'sign') setValue('signature', '');
-    }, [setValue, page, formValues.address, formValues.message]);
+        if (isSignPage) setValue('signature', '');
+    }, [setValue, isSignPage, formValues.address, formValues.message]);
 
     useEffect(() => {
         const overrideValues =
-            page === 'sign' && account?.networkType === 'ethereum'
+            isSignPage && account?.networkType === 'ethereum'
                 ? {
                       path: account.path,
                       address: account.descriptor,
@@ -125,7 +173,7 @@ export const useSignVerifyForm = (page: 'sign' | 'verify', account?: Account) =>
             ...DEFAULT_VALUES,
             ...overrideValues,
         });
-    }, [reset, account, page]);
+    }, [reset, account, isSignPage]);
 
     return {
         isFormDirty: isDirty,

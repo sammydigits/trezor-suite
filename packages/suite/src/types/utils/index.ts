@@ -1,3 +1,5 @@
+import { AnySchema } from 'yup';
+
 // make key required
 export type RequiredKey<M, K extends keyof M> = Omit<M, K> & Required<Pick<M, K>>;
 
@@ -38,3 +40,8 @@ export type DeepPartial<T> = T extends () => any
     : T extends { [key: string]: any }
     ? { [P in keyof T]?: DeepPartial<T[P]> }
     : T;
+
+// Type the yup schema shape
+export type Shape<T> = Record<keyof T, AnySchema>;
+
+export type PrimitiveType = string | number | boolean | Date | null | undefined;
