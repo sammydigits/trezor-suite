@@ -151,3 +151,5 @@ export const useWatchSellTrade = (account: Account, trade: TradeSell) => {
         }
     }, [account, cancelRefresh, refreshCount, removeDraft, resetRefresh, saveTrade, trade]);
 };
+
+// TODO: useWatchSavingsTrade
