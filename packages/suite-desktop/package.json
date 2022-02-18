@@ -132,6 +132,7 @@
             ]
         },
         "win": {
+            "publisherName": "Trezor Test!!!",
             "extraResources": [
                 {
                     "from": "build/static/bin/bridge/win-${arch}",
@@ -147,6 +148,7 @@
             "target": [
                 "nsis"
             ],
+            "sign": "./scripts/customSign.js",
             "signDlls": true
         },
         "linux": {

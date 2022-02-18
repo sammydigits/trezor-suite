@@ -226,13 +226,15 @@ suite-desktop build windows:
 
 suite-desktop build windows manual:
   <<: *config_sign_dev
-  when: manual
+  when: always # WIP: just for now to test signatures, it should be manual
   except:
     <<: *run_everything_rules
   image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/vdovhanych/electron-builder:wine
   variables:
     artifact: ${DESKTOP_APP_NAME}*
     platform: win
+    WIN_CSC_LINK: ./test-keys/cert.pfx
+    WIN_CSC_KEY_PASSWORD: test
   <<: *build
 
 suite-desktop build windows codesign:
