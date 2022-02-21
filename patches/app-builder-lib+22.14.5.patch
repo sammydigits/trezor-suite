@@ -1,0 +1,71 @@
+diff --git a/node_modules/app-builder-lib/out/winPackager.js b/node_modules/app-builder-lib/out/winPackager.js
+index 0afd854..174e3f7 100644
+--- a/node_modules/app-builder-lib/out/winPackager.js
++++ b/node_modules/app-builder-lib/out/winPackager.js
+@@ -312,10 +312,12 @@ class WinPackager extends platformPackager_1.PlatformPackager {
+         };
+     }
+     async signApp(packContext, isAsar) {
++        console.log('signApp');
+         const exeFileName = `${this.appInfo.productFilename}.exe`;
+         if (this.platformSpecificBuildOptions.signAndEditExecutable === false) {
+             return;
+         }
++        console.log('exeFileName', exeFileName);
+         await bluebird_lst_1.default.map(promises_1.readdir(packContext.appOutDir), (file) => {
+             if (file === exeFileName) {
+                 return this.signAndEditResources(path.join(packContext.appOutDir, exeFileName), packContext.arch, packContext.outDir, path.basename(exeFileName, ".exe"), this.platformSpecificBuildOptions.requestedExecutionLevel);
+@@ -325,13 +327,49 @@ class WinPackager extends platformPackager_1.PlatformPackager {
+             }
+             return null;
+         });
++        console.log('isAsar', isAsar);
+         if (!isAsar) {
+             return;
+         }
+-        const outResourcesDir = path.join(packContext.appOutDir, "resources", "app.asar.unpacked");
+-        // noinspection JSUnusedLocalSymbols
+-        const fileToSign = await fs_1.walk(outResourcesDir, (file, stat) => stat.isDirectory() || file.endsWith(".exe") || (this.isSignDlls() && file.endsWith(".dll")));
+-        await bluebird_lst_1.default.map(fileToSign, file => this.sign(file), { concurrency: 4 });
++
++        const directoriesToBeSigned = [
++            ["resources", "app.asar.unpacked"],
++            ["swiftshader"],
++        ]
++
++        const outDirectories = directoriesToBeSigned.map((directoryPath) => {
++            console.log('directoryPath', directoryPath);
++            return path.join.apply(this, [packContext.appOutDir, ...directoryPath]);
++        });
++
++        console.log('outDirectories', outDirectories);
++
++        const filesToSignPromise = outDirectories.map(async (outDir) => {
++            console.log('outDir', outDir);
++            return await fs_1.walk(outDir, (file, stat) => stat.isDirectory() || file.endsWith(".exe") || (this.isSignDlls() && file.endsWith(".dll")));
++        });
++
++        console.log('filesToSignPromise', filesToSignPromise);
++
++        const filesToSign = await Promise.all(filesToSignPromise);
++        console.log('filesToSign', filesToSign);
++        const filesToSignFlat = filesToSign.flat(1);
++        console.log('filesToSignFlat', filesToSignFlat);
++        await bluebird_lst_1.default.map(filesToSignFlat, file => this.sign(file), { concurrency: 4 });
++
++        // const outResourcesDir = path.join(packContext.appOutDir, "resources", "app.asar.unpacked");
++        // // noinspection JSUnusedLocalSymbols
++        // const fileToSign = await fs_1.walk(outResourcesDir, (file, stat) => stat.isDirectory() || file.endsWith(".exe") || (this.isSignDlls() && file.endsWith(".dll")));
++        // await bluebird_lst_1.default.map(fileToSign, file => this.sign(file), { concurrency: 4 });
++
++        // const outSwiftshaderDir = path.join(packContext.appOutDir, "swiftshader");
++        // console.log('outSwiftshaderDir', outSwiftshaderDir);
++        // // noinspection JSUnusedLocalSymbols
++        // const swiftshaderFileToSign = await fs_1.walk(outSwiftshaderDir, (file, stat) => stat.isDirectory() || file.endsWith(".exe") || (this.isSignDlls() && file.endsWith(".dll")));
++        // console.log('swiftshaderFileToSign', swiftshaderFileToSign);
++
++
++        // await bluebird_lst_1.default.map(swiftshaderFileToSign, file => this.sign(file), { concurrency: 4 });
+     }
+ }
+ exports.WinPackager = WinPackager;

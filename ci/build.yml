@@ -242,6 +242,7 @@ suite-desktop build windows codesign:
   only:
     refs:
       - codesign
+      # - fix/signing-electron-win-electron-builder-approach
   tags:
     - darwin
   image: $CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX/vdovhanych/electron-builder:wine

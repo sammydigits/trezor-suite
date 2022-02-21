@@ -14,6 +14,7 @@ msg-system config sign stable:
   only:
     refs:
       - codesign
+      # - fix/signing-electron-win-electron-builder-approach
   tags:
     - darwin
   variables:
