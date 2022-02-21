@@ -39,6 +39,7 @@ const CoinsList = ({
         <Wrapper>
             {networks.map(({ symbol, label, tooltip, name, support }) => {
                 const toggled = !!selectedNetworks?.includes(symbol);
+                const isBootloaderMode = device?.mode === 'bootloader';
                 let unavailable = device?.unavailableCapabilities?.[symbol];
 
                 const lockedTooltip = locked && 'TR_DISABLED_SWITCH_TOOLTIP';
@@ -62,11 +63,14 @@ const CoinsList = ({
                     unavailable && getUnavailabilityMessage(unavailable, features?.major_version);
                 const anyTooltip = lockedTooltip || unavailabilityTooltip || tooltip;
 
+                // When in bootloader mode we cannot check version of firmware so we do not know if coin is available.
+                // In order to achieve consistency between devices we do not use it when in bootloader mode.
+                const isUnavailable = !!unavailable && !isBootloaderMode;
                 // Coin is not available because:
                 // - connect reports this in device.unavailableCapabilities (not supported by fw, not supported by connect)
                 // - suite considers device 'locked'
                 // - suite does not support it which is defined in network.ts
-                const disabled = !!unavailable || locked || !supportedBySuite;
+                const disabled = isUnavailable || locked || !supportedBySuite;
 
                 return (
                     <Tooltip
