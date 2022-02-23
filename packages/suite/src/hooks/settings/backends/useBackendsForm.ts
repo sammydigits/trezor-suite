@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useActions, useSelector, useTranslation } from '@suite-hooks';
 import { isUrl } from '@trezor/utils';
+import { isOnionUrl } from '@suite-utils/tor';
 import { setBackend as setBackendAction } from '@settings-actions/walletSettingsActions';
 import type { Network } from '@wallet-types';
 import type { BackendType } from '@wallet-reducers/settingsReducer';
@@ -114,13 +115,19 @@ export const useBackendsForm = (coin: Network['symbol']) => {
 
     const input = useBackendUrlInput(coin, currentValues.type, currentValues.urls);
 
-    const save = () => {
-        const { type, urls } = currentValues;
+    const getUrls = () => {
         const lastUrl = input.value && !input.error ? [input.value] : [];
+        return currentValues.urls.concat(lastUrl);
+    };
+
+    const hasOnion = () => !!getUrls().find(isOnionUrl);
+
+    const save = () => {
+        const { type } = currentValues;
         setBackend({
             coin,
             type: type === 'default' ? 'blockbook' : type,
-            urls: type === 'default' ? [] : urls.concat(lastUrl),
+            urls: type === 'default' ? [] : getUrls(),
         });
     };
 
@@ -128,6 +135,7 @@ export const useBackendsForm = (coin: Network['symbol']) => {
         type: currentValues.type,
         urls: currentValues.urls,
         input,
+        hasOnion,
         addUrl,
         removeUrl,
         changeType,
