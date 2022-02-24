@@ -1100,10 +1100,6 @@ export default defineMessages({
         defaultMessage: 'Document number',
         id: 'TR_SAVINGS_KYC_START_DOCUMENT_NUMBER_LABEL',
     },
-    TR_SAVINGS_KYC_START_CONFIRM: {
-        defaultMessage: 'Confirm',
-        id: 'TR_SAVINGS_KYC_START_CONFIRM',
-    },
     TR_SAVINGS_KYC_START_AGREE_WITH_TERMS: {
         defaultMessage: 'I agree with {providerName} privacy policy {link}',
         id: 'TR_SAVINGS_KYC_START_AGREE_WITH_TERMS',
