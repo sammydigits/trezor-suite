@@ -1,6 +1,8 @@
 import TrezorConnect, { Device, DEVICE } from 'trezor-connect';
+import { desktopApi } from '@trezor/suite-desktop-api';
 import * as comparisonUtils from '@suite-utils/comparisonUtils';
 import * as deviceUtils from '@suite-utils/device';
+import { isOnionUrl } from '@suite-utils/tor';
 import { addToast } from '@suite-actions/notificationActions';
 import * as modalActions from '@suite-actions/modalActions';
 import { SUITE, METADATA } from './constants';
@@ -150,6 +152,19 @@ export const updateTorStatus = (payload: boolean): SuiteAction => ({
     type: SUITE.TOR_STATUS,
     payload,
 });
+
+export const toggleTor = (enable: boolean) => async (dispatch: Dispatch, getState: GetState) => {
+    const { backends } = getState().wallet.settings;
+    const hasOnionBackend = Object.values(backends)
+        .flatMap(({ urls }) => urls)
+        .find(isOnionUrl);
+
+    if (!enable && hasOnionBackend) {
+        const res = await dispatch(modalActions.openDeferredModal({ type: 'disable-tor' }));
+        if (!res) return;
+    }
+    desktopApi.toggleTor(enable);
+};
 
 export const setOnionLinks = (payload: boolean): SuiteAction => ({
     type: SUITE.ONION_LINKS,
