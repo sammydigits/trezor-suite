@@ -3176,6 +3176,10 @@ export default defineMessages({
         id: 'TR_TOR_ENABLE',
         defaultMessage: 'Enable Tor',
     },
+    TR_TOR_DISABLE: {
+        id: 'TR_TOR_DISABLE',
+        defaultMessage: 'Disable Tor',
+    },
     TR_TOR_ENABLE_AND_CONFIRM: {
         id: 'TR_TOR_ENABLE_AND_CONFIRM',
         defaultMessage: 'Enable Tor and confirm',
@@ -3184,6 +3188,18 @@ export default defineMessages({
         id: 'TR_TOR_DESCRIPTION',
         defaultMessage:
             "Enabling this will route all of Suite's traffic through the Tor network.{lineBreak}All requests to Trezor infrastructure will be pointed to our Tor services, increasing your privacy and security.",
+    },
+    TR_TOR_REMOVE_ONION_AND_DISABLE: {
+        id: 'TR_TOR_REMOVE_ONION_AND_DISABLE',
+        defaultMessage: 'Remove all addresses and disable Tor',
+    },
+    TR_TOR_ONION_REMOVAL_NEEDED: {
+        id: 'TR_TOR_ONION_REMOVAL_NEEDED',
+        defaultMessage: 'These onion addresses must be removed in order to disable Tor:',
+    },
+    TR_TOR_ONION_NO_MORE: {
+        id: 'TR_TOR_ONION_NO_MORE',
+        defaultMessage: 'No more onion addresses',
     },
     TR_ONION_BACKEND_TOR_NEEDED: {
         id: 'TR_ONION_BACKEND_TOR_NEEDED',
