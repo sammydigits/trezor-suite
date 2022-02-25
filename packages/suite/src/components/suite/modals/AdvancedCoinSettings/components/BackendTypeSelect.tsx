@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+
 import { Select } from '@trezor/components';
 import { Translation } from '@suite-components';
 import { isDesktop } from '@suite-utils/env';
-import { useSelector } from '@suite-hooks';
+
 import type { Network } from '@wallet-types';
 import type { BackendOption } from '@settings-hooks/backends';
 
@@ -12,14 +13,11 @@ const Capitalize = styled.span`
 `;
 
 const useBackendOptions = (network: Network) => {
-    const debug = useSelector(state => state.suite.settings.debug.showDebugMenu);
-
     const options = useMemo(() => {
         const backends: BackendOption[] = [];
         if (network.symbol !== 'regtest') backends.push('default');
         if (network.networkType !== 'ripple') backends.push('blockbook');
-        if (['btc', 'regtest'].includes(network.symbol) && isDesktop() && debug)
-            backends.push('electrum');
+        if (['btc', 'regtest'].includes(network.symbol) && isDesktop()) backends.push('electrum');
 
         return backends.map(backend => ({
             label:
@@ -33,7 +31,7 @@ const useBackendOptions = (network: Network) => {
                 ),
             value: backend,
         }));
-    }, [network, debug]);
+    }, [network]);
 
     return options;
 };
