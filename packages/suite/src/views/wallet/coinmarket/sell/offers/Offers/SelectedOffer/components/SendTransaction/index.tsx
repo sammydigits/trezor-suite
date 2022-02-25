@@ -98,13 +98,13 @@ const SendTransactionComponent = () => {
                     <Title>
                         <Translation
                             id="TR_SELL_DETAIL_WAITING_FOR_SEND_CRYPTO"
-                            values={{ provider: providerName }}
+                            values={{ providerName }}
                         />
                     </Title>
                     <Value>
                         <Translation
                             id="TR_SELL_DETAIL_WAITING_FOR_SEND_CRYPTO_INFO"
-                            values={{ provider: providerName }}
+                            values={{ providerName }}
                         />
                     </Value>
                 </WaitingWrapper>

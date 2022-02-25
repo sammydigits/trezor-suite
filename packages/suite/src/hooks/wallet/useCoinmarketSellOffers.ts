@@ -13,7 +13,7 @@ import { useCoinmarketRecomposeAndSign } from './useCoinmarketRecomposeAndSign '
 import { useCoinmarketNavigation } from '@wallet-hooks/useCoinmarketNavigation';
 import { InvityAPIReloadQuotesAfterSeconds } from '@wallet-constants/coinmarket/metadata';
 import { getUnusedAddressFromAccount } from '@suite/utils/wallet/coinmarket/coinmarketUtils';
-import { TradeSell } from '@suite/types/wallet/coinmarketCommonTypes';
+import type { TradeSell } from '@suite/types/wallet/coinmarketCommonTypes';
 
 export const useOffers = (props: Props) => {
     const timer = useTimer();

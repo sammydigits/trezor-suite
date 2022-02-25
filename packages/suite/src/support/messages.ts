@@ -869,7 +869,7 @@ export default defineMessages({
         id: 'TR_SELL_DETAIL_PENDING_TITLE',
     },
     TR_SELL_DETAIL_WAITING_FOR_SEND_CRYPTO: {
-        defaultMessage: "Waiting for {provider}'s address",
+        defaultMessage: "Waiting for {providerName}'s address",
         id: 'TR_SELL_DETAIL_WAITING_FOR_SEND_CRYPTO',
     },
     TR_SELL_DETAIL_WAITING_FOR_SEND_CRYPTO_INFO: {
